@@ -32,7 +32,7 @@ def create_commendation(schoolkid, subject):
                                    group_letter=cls.group_letter,
                                    subject__title=subject
                                    ).last()
-    commendation = Commendation(text='123',
+    commendation = Commendation(text='Великолепно!',
                                 created=lesson.date,
                                 schoolkid=cls,
                                 subject=lesson.subject,
