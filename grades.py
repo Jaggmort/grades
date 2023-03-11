@@ -28,7 +28,7 @@ def create_commendation(schoolkid, subject):
     lesson = Lesson.objects.filter(year_of_study=cls.year_of_study,
                                    group_letter=cls.group_letter,
                                    subject__title=subject
-                                   ).last()
+                                   ).order_by('date').last()
     commendation = Commendation(text='Великолепно!',
                                 created=lesson.date,
                                 schoolkid=cls,
