@@ -8,10 +8,7 @@ from django.shortcuts import get_object_or_404
 
 
 def fix_marks(schoolkid):
-    marks = Mark.objects.filter(schoolkid__in=schoolkid, points__in=[2, 3])
-    for mark in marks:
-        mark.points = 5
-        mark.save()
+    Mark.objects.filter(schoolkid__in=schoolkid, points__in=[2, 3]).update(points=5)
 
 
 def remove_chastisements(schoolkid):
