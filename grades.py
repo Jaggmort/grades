@@ -1,10 +1,21 @@
 import django
+import random
 from datacenter.models import Mark
 from datacenter.models import Chastisement
 from datacenter.models import Lesson
 from datacenter.models import Commendation
 from datacenter.models import Schoolkid
 from django.shortcuts import get_object_or_404
+
+
+COMMENDATIONS = ['Молодец!',
+                 'Отлично!',
+                 'Хорошо!',
+                 'Гораздо лучше, чем я ожидал!',
+                 'Ты меня приятно удивил!',
+                 'Великолепно!', 'Прекрасно!',
+                 'Ты меня очень обрадовал!'
+                 ]
 
 
 def fix_marks(schoolkid):
@@ -25,11 +36,12 @@ def create_commendation(schoolkid, subject):
     except Schoolkid.MultipleObjectsReturned:
         print('Найдено несколько учеников')
         return
+    text = random.choice(COMMENDATIONS)
     lesson = Lesson.objects.filter(year_of_study=cls.year_of_study,
                                    group_letter=cls.group_letter,
                                    subject__title=subject
                                    ).order_by('date').last()
-    commendation = Commendation(text='Великолепно!',
+    commendation = Commendation(text=text,
                                 created=lesson.date,
                                 schoolkid=cls,
                                 subject=lesson.subject,
