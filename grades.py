@@ -41,6 +41,9 @@ def create_commendation(schoolkid, subject):
                                    group_letter=found_schoolkid.group_letter,
                                    subject__title=subject
                                    ).order_by('date').last()
+    if lesson is None:
+        print('Lesson not found')
+        return
     commendation = Commendation(text=text,
                                 created=lesson.date,
                                 schoolkid=found_schoolkid,
