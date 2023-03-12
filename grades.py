@@ -29,7 +29,7 @@ def remove_chastisements(schoolkid):
 
 def create_commendation(schoolkid, subject):
     try:
-        cls = get_object_or_404(Schoolkid, full_name__contains=schoolkid)
+        found_schoolkid = get_object_or_404(Schoolkid, full_name__contains=schoolkid)
     except django.http.response.Http404:
         print('Ученики с таким именем не найдены')
         return
@@ -37,13 +37,13 @@ def create_commendation(schoolkid, subject):
         print('Найдено несколько учеников')
         return
     text = random.choice(COMMENDATIONS)
-    lesson = Lesson.objects.filter(year_of_study=cls.year_of_study,
-                                   group_letter=cls.group_letter,
+    lesson = Lesson.objects.filter(year_of_study=found_schoolkid.year_of_study,
+                                   group_letter=found_schoolkid.group_letter,
                                    subject__title=subject
                                    ).order_by('date').last()
     commendation = Commendation(text=text,
                                 created=lesson.date,
-                                schoolkid=cls,
+                                schoolkid=found_schoolkid,
                                 subject=lesson.subject,
                                 teacher=lesson.teacher
                                 )
